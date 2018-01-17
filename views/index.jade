@@ -1,0 +1,6 @@
+extends layout
+
+block content
+  h1= title
+  - for (var key in status)
+    li #{key} - #{status[key]}
