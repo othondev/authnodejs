@@ -4,9 +4,13 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/users', { useMongoClient: true });
+mongoose.Promise = global.Promise;
 
 var index = require('./routes/index');
 var auth = require('./routes/auth');
+var user = require('./routes/user');
 
 var app = express();
 
@@ -24,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/auth', auth);
+app.use('/user',user);
 
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
