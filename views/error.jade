@@ -1,10 +1,7 @@
 extends layout
 
 block content
-  h1= message
-  h2= error.status
-  - if (error.mapped)
-    - for (let key in error.mapped())
-      li #{error.mapped()[key].msg}
-  pre #{error.stack}
-
+  - if (errs)
+    - for (var i = 0; i< errs.length; i++)
+      li= span= errs[i].statusCode + " " + errs[i].message
+    

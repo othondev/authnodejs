@@ -11,7 +11,7 @@ router.route('/')
 
     user.save((err)=>{
         if(err) {
-            res.json(err);
+            next(err);
             return;
         }
         user.set('password', undefined);
