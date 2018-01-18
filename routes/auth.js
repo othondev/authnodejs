@@ -4,6 +4,8 @@ var router = express.Router();
 var User = require('../models/User');
 var bcrypt = require('bcrypt-nodejs');
 
+const authContoller = require('../controllers/AuthenticationController');
+
 router.route('/login').post([
     check('username').exists().withMessage('username is required'),
     check('password').exists().withMessage('password is required'),
@@ -11,21 +13,12 @@ router.route('/login').post([
     try {
         validationResult(req).throw();
 
-        User.findOne({username:req.body.username},(err,doc)=>{
+        authContoller.login(req.body.username,req.body.password,(err,result)=>{
             if(err){
-                res.json(err);
-                return;
-            }
-            if(!doc || !bcrypt.compareSync(req.body.password,doc.password)){
-                var err = new Error('User or password invalid');
-                err.status = 404;
                 next(err);
-                return;
             }else{
-                doc.set('password', undefined);
-                res.json({success:true,data:doc});
-            }           
-                
+                res.json(result);
+            }
         });
         
     } catch (err) {
