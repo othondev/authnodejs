@@ -1,7 +1,0 @@
-extends layout
-
-block content
-  - if (errs)
-    - for (var i = 0; i< errs.length; i++)
-      li= span= errs[i].statusCode + " " + errs[i].message
-    
